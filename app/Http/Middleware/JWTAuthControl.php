@@ -21,7 +21,7 @@ class JWTAuthControl
             return $next($request);
         }
         else {
-            return (new Collection([], 403))->response(false, ['JWT is invalid!']);
+            return (new Collection([], 401))->response(false, ['JWT is invalid!']);
         }
     }
 }

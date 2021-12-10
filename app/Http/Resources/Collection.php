@@ -14,6 +14,10 @@ class Collection
 
     public function response(bool $success, array $messages)
     {
+        if($this->status == 200 && !$success) {
+            $this->status = 400;
+        }
+
         return response([
             'data' => $this->data,
             'status' => [

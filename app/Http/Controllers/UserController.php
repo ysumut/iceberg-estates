@@ -27,7 +27,7 @@ class UserController extends Controller
             ]))->response(true, ['Successfully logged in!']);
         }
 
-        return (new Collection([]))->response(false, ['Email or password is wrong!']);
+        return (new Collection([],401))->response(false, ['Email or password is wrong!']);
     }
 
     public function register(Request $request) {
@@ -51,7 +51,9 @@ class UserController extends Controller
         $user->user_type = User::STAFF_ID;
         $user->save();
 
-        return (new Collection([]))->response(true, ['Successfully registered!']);
+        return (new Collection([
+            ['token' => auth()->tokenById($user->id)]
+        ]))->response(true, ['Successfully registered!']);
     }
 
     public function getUserInfo() {
