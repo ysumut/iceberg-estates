@@ -34,7 +34,8 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3|max:50|regex:/(?!^\d+$)^.+$/', // regex : not all are numbers
             'surname' => 'required|string|min:3|max:75|regex:/(?!^\d+$)^.+$/',
-            'email' => 'required|email|max:255|unique:users',
+            'email' => 'required|email|max:100|unique:users',
+            'phone_number' => 'required|string|min:5|max:30|unique:users',
             'password' => 'required|string|min:6|max:32|regex:/(?!^\d+$)^.+$/'
         ]);
         if($validator->fails()) {
@@ -45,7 +46,9 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
         $user->password = Hash::make($request->password);
+        $user->user_type = User::STAFF_ID;
         $user->save();
 
         return (new Collection([]))->response(true, ['Successfully registered!']);
