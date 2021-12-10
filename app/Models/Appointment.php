@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Appointment extends Model
 {
     use HasFactory, SoftDeletes;
+
+    public function contact() {
+        return $this->hasOne(Contact::class, 'id','contact_id');
+    }
 }

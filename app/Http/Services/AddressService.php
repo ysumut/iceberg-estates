@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class AddressService
 {
-    public static function calculate(String $postcode_origin, String $postcode_destination): array
+    public static function service(String $postcode_origin, String $postcode_destination): array
     {
         try {
             $origin = Http::get("https://api.postcodes.io/postcodes/$postcode_origin")->json();
@@ -52,41 +52,33 @@ class AddressService
         }
     }
 
-    public static function timePlanning(float $duration): array
+    public static function timePlanning(float $duration, String $appointment_date, Appointment $appointment = null): array
     {
-        $last = Appointment::where('user_id', auth()->id())->orderByDesc('appointment_date')->first();
-        $now = now();
-        $nowDateTime = $now->toDateTimeString();
-        $base = null;
+        if($appointment) {
+            $last_appointment = Appointment::where('user_id', $appointment->user_id)->where('id', '!=', $appointment->id)->orderByDesc('appointment_date')->first();
+        }
+        else {
+            $last_appointment = Appointment::where('user_id', auth()->id())->orderByDesc('appointment_date')->first();
+        }
+        $office_leaving_date = Carbon::create($appointment_date)->subSeconds($duration);
 
-        if($last) {
-            $appointment_finish_date = Carbon::create($last->appointment_date)->addHour()->toDateTimeString();
-
-            if($last->office_arrival_date >= $nowDateTime && $appointment_finish_date <= $nowDateTime) {
-                // Ofise varış saatinden hesaplanır
-                $base = Carbon::create($last->office_arrival_date);
-            }
-            else if($appointment_finish_date >= $nowDateTime && $last->office_leaving_date <= $nowDateTime) {
-                // Randevunun bitişinden hesaplanır
-                $base = Carbon::create($last->appointment_date)->addHour();
-            }
-            else if($last->office_leaving_date >= $nowDateTime) {
-                // Diğer randevuya zaman varsa şimdiden hesaplanır
-                if($last->office_leaving_date->diffInSeconds($now) > $duration*2 + 60) {
-                    $base = $now;
-                }
-            }
+        if($office_leaving_date < now()) {
+            return ['status' => false, 'messages' => ['Not enough time for the leave office.']];
         }
 
-        // Hiçbir durum gerçekleşmezse şimdiden hesaplanır
-        if(!$base) {
-            $base = $now;
+        if($last_appointment) {
+            if($last_appointment->office_arrival_date > $office_leaving_date) {
+                return ['status' => false, 'messages' => ['There is another appointment on that date.']];
+            }
         }
 
         return [
-            'leave_office' => $base->toDateTimeString(),
-            'appointment_date' => $base->copy()->addSeconds($duration)->toDateTimeString(),
-            'arrival_office' => $base->copy()->addSeconds($duration*2 + 60)->toDateTimeString(),
+            'status' => true,
+            'data' => [
+                'leave_office' => $office_leaving_date->toDateTimeString(),
+                'appointment_date' => $office_leaving_date->copy()->addSeconds($duration)->toDateTimeString(),
+                'arrival_office' => $office_leaving_date->copy()->addSeconds($duration*2 + 60)->toDateTimeString(),
+            ]
         ];
     }
 }
