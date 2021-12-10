@@ -1,6 +1,6 @@
 # Iceberg Estates Rest API
-* [Demo Link]()
-* [Postman Collection]()
+* [Demo Link](https://iceberg-estates.herokuapp.com)
+* [Postman Collection](https://www.getpostman.com/collections/c4c6b97b982cfcfd8162)
 
 ## Used in this project:
 * Laravel 8
