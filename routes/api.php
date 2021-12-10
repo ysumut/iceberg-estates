@@ -17,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('user')->group(function () {
     Route::post('login', [\App\Http\Controllers\UserController::class, 'login']);
     Route::post('register', [\App\Http\Controllers\UserController::class, 'register']);
+
+    Route::get('me', [\App\Http\Controllers\UserController::class, 'getUserInfo'])->middleware('jwt.auth.control');
+    Route::post('logout', [\App\Http\Controllers\UserController::class, 'logout'])->middleware('jwt.auth.control');
 });
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::get('me', [\App\Http\Controllers\UserController::class, 'getUserInfo']);
+Route::middleware('jwt.auth.control')->group(function () {
+
 });

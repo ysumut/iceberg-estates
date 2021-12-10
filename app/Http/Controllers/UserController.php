@@ -52,9 +52,14 @@ class UserController extends Controller
         return (new Collection([]))->response(true, ['Successfully registered!']);
     }
 
-    public function getUserInfo(Request $request) {
+    public function getUserInfo() {
         return (new Collection([
             auth()->user()
         ]))->response(true, ['Successfully registered!']);
+    }
+
+    public function logout() {
+        auth()->logout();
+        return (new Collection([]))->response(true, ['Successfully logout!']);
     }
 }
