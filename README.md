@@ -10,7 +10,7 @@
 * Firstly, create a postgresql database and create .env file from .env.example
 
 ```bash 
-$ composer install --ignore-platform-reqs
+$ composer install
 ```
 ```bash 
 $ php artisan key:generate
