@@ -23,7 +23,7 @@ class UserController extends Controller
 
         if($user && Hash::check($request->password, $user->password)) {
             return (new Collection([
-                'token' => $user->createToken('Iceberg')
+                ['token' => auth()->tokenById($user->id)]
             ]))->response(true, ['Successfully logged in!']);
         }
 
@@ -50,5 +50,11 @@ class UserController extends Controller
         $user->save();
 
         return (new Collection([]))->response(true, ['Successfully registered!']);
+    }
+
+    public function getUserInfo(Request $request) {
+        return (new Collection([
+            auth()->user()
+        ]))->response(true, ['Successfully registered!']);
     }
 }

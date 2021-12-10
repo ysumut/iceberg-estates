@@ -18,3 +18,10 @@ Route::prefix('user')->group(function () {
     Route::post('login', [\App\Http\Controllers\UserController::class, 'login']);
     Route::post('register', [\App\Http\Controllers\UserController::class, 'register']);
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::get('me', [\App\Http\Controllers\UserController::class, 'getUserInfo']);
+});
