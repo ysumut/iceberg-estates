@@ -21,6 +21,7 @@ class CreateContactsTable extends Migration
             $table->string('phone_number',30);
             $table->string('post_code',50);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -22,6 +22,7 @@ class CreateAppointmentsTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('contact_id')->references('id')->on('contacts');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
