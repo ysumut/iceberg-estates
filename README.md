@@ -1,5 +1,5 @@
 # Iceberg Estates Rest API
-* [Demo Link](https://iceberg-estates.herokuapp.com)
+* [Deployment Link](https://iceberg-estates.herokuapp.com)
 * [Postman Collection](https://www.getpostman.com/collections/c4c6b97b982cfcfd8162)
 
 ## Used in this project:
