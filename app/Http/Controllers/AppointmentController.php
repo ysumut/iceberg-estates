@@ -22,7 +22,7 @@ class AppointmentController extends Controller
         $user = auth()->user();
 
         if($user->user_type == User::BOSS_ID) {
-            $data = Appointment::with('contact');
+            $data = Appointment::with('user','contact');
         }
         else {
             $data = Appointment::with('contact')->where('user_id', $user->id);
