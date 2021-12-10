@@ -46,7 +46,6 @@ class UserController extends Controller
         $user->surname = $request->surname;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->user_type = User::CUSTOMER;
         $user->save();
 
         return (new Collection([]))->response(true, ['Successfully registered!']);

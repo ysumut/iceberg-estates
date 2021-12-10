@@ -16,7 +16,7 @@ $ composer install --ignore-platform-reqs
 $ php artisan key:generate
 ```
 ```bash 
-$ php artisan migrate --seed
+$ php artisan migrate
 ```
 ```bash 
 $ php artisan jwt:secret
