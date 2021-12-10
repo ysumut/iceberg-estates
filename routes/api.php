@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,5 +22,5 @@ Route::prefix('user')->group(function () {
 });
 
 Route::middleware('jwt.auth.control')->group(function () {
-
+    Route::resource('appointment', \App\Http\Controllers\AppointmentController::class);
 });
