@@ -43,6 +43,11 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    public const ESTATE_POST_CODE = 'cm27pj';
+
+    public const BOSS_ID = 1;
+    public const STAFF_ID = 2;
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

@@ -16,7 +16,7 @@ $ composer install --ignore-platform-reqs
 $ php artisan key:generate
 ```
 ```bash 
-$ php artisan migrate
+$ php artisan migrate --seed
 ```
 ```bash 
 $ php artisan jwt:secret
@@ -24,3 +24,8 @@ $ php artisan jwt:secret
 ```bash 
 $ php artisan serve
 ```
+
+## Note:
+Boss Estate Agent User;
+* <b>Email</b>: yusufumutbulak@gmail.com
+* <b>Password</b>: deneme123
